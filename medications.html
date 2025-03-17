@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Medication Management</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container">
+    <h2 class="mt-4">Medication Management</h2>
+    <div id="medicationsTable" class="mt-3"></div>
+    <form id="medicationForm">
+      <div class="form-group">
+        <label for="patientIdMed">Patient ID:</label>
+        <input type="text" id="patientIdMed" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="medicationName">Medication Name:</label>
+        <input type="text" id="medicationName" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="dosage">Dosage:</label>
+        <input type="text" id="dosage" class="form-control" required>
+      </div>
+      <button type="submit" class="btn btn-info">Add / Update Medication</button>
+    </form>
+    <div id="medicationMessage" class="mt-3"></div>
+  </div>
+  <script src="js/main.js"></script>
+  <script>
+    // If patientId is available, load medications for the patient.
+    const patientId = localStorage.getItem('patientId');
+    if (patientId) {
+      loadMedications(patientId);
+    }
+  </script>
+</body>
+</html>

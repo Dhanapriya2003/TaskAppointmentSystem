@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Doctor Medication Management</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script>
+    function getQueryParam(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+    function logoutDoctor() {
+      localStorage.removeItem('doctorId');
+      window.location.href = "index.html";
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div class="d-flex justify-content-between mt-2">
+      <button class="btn btn-secondary" onclick="window.history.back()">Back</button>
+      <button class="btn btn-danger" onclick="logoutDoctor()">Logout</button>
+    </div>
+    <h2 class="mt-4">Medication Management for Appointment</h2>
+    <p>Appointment ID: <span id="appointmentIdDisplay"></span></p>
+    <p>Patient ID: <span id="patientIdDisplay"></span></p>
+    <div id="medicationsTable" class="mt-3"></div>
+    <h4 class="mt-4">Add / Update Medication</h4>
+    <form id="medicationForm">
+      <input type="hidden" id="medicationId" value="">
+      <div class="form-group">
+        <label for="medicationName">Medication Name:</label>
+        <input type="text" id="medicationName" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="dosage">Dosage:</label>
+        <input type="text" id="dosage" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="days">Days:</label>
+        <input type="number" id="days" class="form-control" required>
+      </div>
+      <button type="submit" class="btn btn-info">Save Medication</button>
+    </form>
+    <div id="medicationMessage" class="mt-3"></div>
+  </div>
+  <script src="js/main.js"></script>
+  <script>
+    const appointmentId = getQueryParam('appointmentId');
+    const patientId = getQueryParam('patientId');
+    document.getElementById('appointmentIdDisplay').innerText = appointmentId;
+    document.getElementById('patientIdDisplay').innerText = patientId;
+    localStorage.setItem('doctorPatientId', patientId);
+    localStorage.setItem('currentAppointmentId', appointmentId);
+    loadMedicationsForAppointment(appointmentId);
+  </script>
+</body>
+</html>

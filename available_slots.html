@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Available Appointment Slots</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script>
+    // Helper function to get query parameters
+    function getQueryParam(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+    // Logout function for patients
+    function logoutPatient() {
+      localStorage.removeItem('patientId');
+      window.location.href = "index.html";
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <!-- Back and Logout Buttons -->
+    <div class="d-flex justify-content-between mt-2">
+      <button class="btn btn-secondary" onclick="window.history.back()">Back</button>
+      <button class="btn btn-danger" onclick="logoutPatient()">Logout</button>
+    </div>
+    <h2 class="mt-4">Available Appointment Slots</h2>
+    <div class="form-group">
+      <label for="specializationSelect">Select Specialization:</label>
+      <select id="specializationSelect" class="form-control">
+        <option value="">-- All Specializations --</option>
+        <option value="Orthopedics">Orthopedics</option>
+        <option value="General Medicine">General Medicine</option>
+        <option value="Oncology">Oncology</option>
+        <option value="Gynecology">Gynecology</option>
+        <option value="Pediatrics">Pediatrics</option>
+      </select>
+    </div>
+    <!-- This div will be populated with doctor cards and their available slots -->
+    <div id="slotsList" class="mt-3"></div>
+  </div>
+  <script src="js/main.js"></script>
+  <script>
+    // When specialization changes, load available slots for that specialization.
+    document.getElementById('specializationSelect').addEventListener('change', function() {
+      loadAvailableSlotsBySpecialization(this.value);
+    });
+    // On page load, load all doctors.
+    window.addEventListener('load', () => {
+      loadAvailableSlotsBySpecialization('');
+    });
+  </script>
+</body>
+</html>

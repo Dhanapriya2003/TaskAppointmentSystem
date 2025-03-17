@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your Appointments</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container">
+    <h2 class="mt-4">Your Appointments</h2>
+    <div id="appointmentsTable" class="mt-3"></div>
+  </div>
+  <script src="js/main.js"></script>
+  <script>
+    // Assume patientId is stored in localStorage by the dashboard
+    const patientId = localStorage.getItem('patientId');
+    if (patientId) {
+      loadPatientAppointments(patientId);
+    }
+  </script>
+</body>
+</html>

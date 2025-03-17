@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Patient Dashboard</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script>
+    function getQueryParam(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+    function logout() {
+      localStorage.removeItem('patientId');
+      window.location.href = "index.html";
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <!-- Back and Logout Buttons -->
+    <div class="d-flex justify-content-between mt-2">
+      <!-- <button class="btn btn-secondary" onclick="window.history.back()">Back</button> -->
+      <button class="btn btn-danger" onclick="logout()">Logout</button>
+    </div>
+    <h2 class="mt-4">Patient Dashboard</h2>
+    <p>Your Patient ID: <span id="patientIdDisplay"></span></p>
+    <div class="mt-4">
+      <a href="available_slots.html" class="btn btn-primary">Book Appointment</a>
+      <!-- <a href="patient_medications.html" class="btn btn-info">View Medications</a> -->
+    </div>
+    <div class="mt-4">
+      <h3>Your Appointments</h3>
+      <div id="appointmentsTable"></div>
+    </div>
+  </div>
+  <script src="js/main.js"></script>
+  <script>
+    // Retrieve the patientId from the query parameter and store it
+    const patientId = getQueryParam('patientId');
+    document.getElementById('patientIdDisplay').innerText = patientId;
+    localStorage.setItem('patientId', patientId);
+
+    // Create a global mapping for doctor IDs to names.
+    let doctorMapping = {};
+    function loadDoctorMapping() {
+      fetch('https://appointmentsystem-wu2g.onrender.com/appointmentsystem/doctors')
+        .then(response => response.json())
+        .then(doctors => {
+          doctors.forEach(doc => {
+            doctorMapping[doc.id] = doc.name;
+          });
+          // Now load appointments using the mapping.
+          loadPatientAppointments(patientId);
+        })
+        .catch(error => console.error('Error loading doctors:', error));
+    }
+    loadDoctorMapping();
+  </script>
+</body>
+</html>

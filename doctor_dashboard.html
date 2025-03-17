@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Doctor Dashboard</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script>
+    function getQueryParam(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+    function manageMedications(appointmentId, patientId) {
+      window.location.href = "doctor_medications.html?appointmentId=" + appointmentId + "&patientId=" + patientId;
+    }
+    function logoutDoctor() {
+      localStorage.removeItem('doctorId');
+      window.location.href = "index.html";
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div class="d-flex justify-content-between mt-2">
+      <!-- <button class="btn btn-secondary" onclick="window.history.back()">Back</button> -->
+      <button class="btn btn-danger" onclick="logoutDoctor()">Logout</button>
+    </div>
+    <h2 class="mt-4">Doctor Dashboard</h2>
+    <p>Your Doctor ID: <span id="doctorIdDisplay"></span></p>
+    <h4>Your Appointments</h4>
+    <div id="doctorAppointments"></div>
+  </div>
+  <script>
+    const doctorId = getQueryParam('doctorId');
+    document.getElementById('doctorIdDisplay').innerText = doctorId;
+    localStorage.setItem('doctorId', doctorId);
+
+    function loadDoctorAppointments() {
+      fetch(`https://appointmentsystem-wu2g.onrender.com/appointmentsystem/appointments/doctor/${doctorId}`)
+        .then(response => response.json())
+        .then(appointments => {
+          let html = `<table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th>Appointment ID</th>
+                            <th>Patient ID</th>
+                            <th>Time</th>
+                            <th>Diagnosis</th>
+                            <th>Comments</th>
+                            <th>Update</th>
+                            <th>Medications</th>
+                          </tr>
+                        </thead>
+                        <tbody>`;
+          appointments.forEach(app => {
+            html += `<tr>
+                        <td>${app.id}</td>
+                        <td>${app.patientId}</td>
+                        <td>${app.appointmentTime}</td>
+                        <td>${app.diagnosis || ''}</td>
+                        <td>${app.doctorComments || ''}</td>
+                        <td><button class="btn btn-sm btn-primary" onclick="updateAppointment('${app.id}')">Update</button></td>
+                        <td><button class="btn btn-sm btn-secondary" onclick="manageMedications('${app.id}', '${app.patientId}')">Manage Medications</button></td>
+                     </tr>`;
+          });
+          html += `</tbody></table>`;
+          document.getElementById('doctorAppointments').innerHTML = html;
+        })
+        .catch(error => console.error('Error loading appointments:', error));
+    }
+
+    function updateAppointment(appointmentId) {
+      const diagnosis = prompt("Enter diagnosis:");
+      const doctorComments = prompt("Enter doctor comments:");
+      const updateData = { diagnosis, doctorComments };
+      
+      fetch(`https://appointmentsystem-wu2g.onrender.com/appointmentsystem/appointments/${appointmentId}/diagnosis`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updateData)
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert('Appointment updated successfully!');
+        loadDoctorAppointments();
+      })
+      .catch(error => console.error('Error updating appointment:', error));
+    }
+
+    loadDoctorAppointments();
+  </script>
+</body>
+</html>

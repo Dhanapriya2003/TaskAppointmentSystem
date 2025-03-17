@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your Medications</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script>
+    function getQueryParam(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+    function logout() {
+      localStorage.removeItem('patientId');
+      window.location.href = "index.html";
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <!-- Back and Logout Buttons -->
+    <div class="d-flex justify-content-between mt-2">
+      <button class="btn btn-secondary" onclick="window.history.back()">Back</button>
+      <button class="btn btn-danger" onclick="logout()">Logout</button>
+    </div>
+    <h2 class="mt-4">Medications for Appointment</h2>
+    <p>Appointment ID: <span id="appointmentIdDisplay"></span></p>
+    <p>Patient ID: <span id="patientIdDisplay"></span></p>
+    <div id="medicationsTable" class="mt-4"></div>
+  </div>
+  <script src="js/main.js"></script>
+  <script>
+    const appointmentId = getQueryParam('appointmentId');
+    const patientId = getQueryParam('patientId') || localStorage.getItem('patientId');
+    document.getElementById('appointmentIdDisplay').innerText = appointmentId;
+    document.getElementById('patientIdDisplay').innerText = patientId;
+    function loadMedicationsForAppointmentForPatient(appointmentId) {
+      fetch(`https://appointmentsystem-wu2g.onrender.com/appointmentsystem/medications/appointment/${appointmentId}`)
+        .then(response => response.json())
+        .then(medications => {
+          let tableHtml = `<table class="table table-bordered">
+                             <thead>
+                               <tr>
+                                 <th>Medication ID</th>
+                                 <th>Name</th>
+                                 <th>Dosage</th>
+                                 <th>Days</th>
+                               </tr>
+                             </thead>
+                             <tbody>`;
+          medications.forEach(med => {
+            tableHtml += `<tr>
+                            <td>${med.id}</td>
+                            <td>${med.medicationName}</td>
+                            <td>${med.dosage}</td>
+                            <td>${med.days || ''}</td>
+                          </tr>`;
+          });
+          tableHtml += `</tbody></table>`;
+          document.getElementById('medicationsTable').innerHTML = tableHtml;
+        })
+        .catch(error => console.error('Error loading medications for appointment:', error));
+    }
+    loadMedicationsForAppointmentForPatient(appointmentId);
+  </script>
+</body>
+</html>
