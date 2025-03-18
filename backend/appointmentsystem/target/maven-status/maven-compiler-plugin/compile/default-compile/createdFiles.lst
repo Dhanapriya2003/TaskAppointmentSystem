@@ -1,0 +1,14 @@
+com\example\appointmentsystem\AppointmentSystemApplication.class
+com\example\appointmentsystem\controller\AppointmentController.class
+com\example\appointmentsystem\model\Medication.class
+com\example\appointmentsystem\repository\PatientRepository.class
+com\example\appointmentsystem\model\Patient.class
+com\example\appointmentsystem\repository\MedicationRepository.class
+com\example\appointmentsystem\model\Appointment.class
+com\example\appointmentsystem\controller\PatientController.class
+com\example\appointmentsystem\model\Doctor.class
+com\example\appointmentsystem\repository\AppointmentRepository.class
+com\example\appointmentsystem\controller\DoctorController.class
+com\example\appointmentsystem\controller\MedicationController.class
+com\example\appointmentsystem\Main.class
+com\example\appointmentsystem\repository\DoctorRepository.class

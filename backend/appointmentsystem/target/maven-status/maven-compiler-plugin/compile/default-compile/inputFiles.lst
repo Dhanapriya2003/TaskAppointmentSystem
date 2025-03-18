@@ -1,0 +1,14 @@
+P:\mini2\patient-project\appointmentsystem\src\main\java\com\example\appointmentsystem\model\Appointment.java
+P:\mini2\patient-project\appointmentsystem\src\main\java\com\example\appointmentsystem\controller\DoctorController.java
+P:\mini2\patient-project\appointmentsystem\src\main\java\com\example\appointmentsystem\controller\PatientController.java
+P:\mini2\patient-project\appointmentsystem\src\main\java\com\example\appointmentsystem\model\Medication.java
+P:\mini2\patient-project\appointmentsystem\src\main\java\com\example\appointmentsystem\repository\AppointmentRepository.java
+P:\mini2\patient-project\appointmentsystem\src\main\java\com\example\appointmentsystem\AppointmentSystemApplication.java
+P:\mini2\patient-project\appointmentsystem\src\main\java\com\example\appointmentsystem\model\Patient.java
+P:\mini2\patient-project\appointmentsystem\src\main\java\com\example\appointmentsystem\repository\DoctorRepository.java
+P:\mini2\patient-project\appointmentsystem\src\main\java\com\example\appointmentsystem\Main.java
+P:\mini2\patient-project\appointmentsystem\src\main\java\com\example\appointmentsystem\model\Doctor.java
+P:\mini2\patient-project\appointmentsystem\src\main\java\com\example\appointmentsystem\repository\PatientRepository.java
+P:\mini2\patient-project\appointmentsystem\src\main\java\com\example\appointmentsystem\controller\MedicationController.java
+P:\mini2\patient-project\appointmentsystem\src\main\java\com\example\appointmentsystem\repository\MedicationRepository.java
+P:\mini2\patient-project\appointmentsystem\src\main\java\com\example\appointmentsystem\controller\AppointmentController.java
